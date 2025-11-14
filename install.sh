@@ -58,10 +58,19 @@ sudo nala install -y \
 
 # --- 3. Instalar Oh My Zsh ---
 log_info "Instalando Oh My Zsh..."
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
+# Asegurarse de que git esté disponible para el instalador de Oh My Zsh
+if ! command -v git &> /dev/null; then
+    log_error "Git no está instalado, es necesario para Oh My Zsh."
+fi
+
+if [ ! -d "$HOME/.oh-my-zsh" ] || [ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]; then
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        log_warn "Instalación de Oh My Zsh incompleta. Eliminando y reinstalando."
+        rm -rf "$HOME/.oh-my-zsh"
+    fi
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || log_error "Fallo al instalar Oh My Zsh."
 else
-    log_warn "Oh My Zsh ya está instalado. Saltando instalación."
+    log_warn "Oh My Zsh ya está instalado y completo. Saltando instalación."
 fi
 
 # --- 4. Instalar plugins de Zsh ---
