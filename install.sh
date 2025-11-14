@@ -2,7 +2,7 @@
 
 # --- Configuración ---
 DOTFILES_DIR="$HOME/dotfiles"
-NVIM_VERSION="0.11.0" 
+NVIM_VERSION="0.10.0" # Puedes cambiar esto a la versión que desees o "latest"
 NVIM_TAR_GZ="nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_PATH="/opt/neovim"
 
@@ -51,9 +51,10 @@ sudo nala install -y \
     ffmpegthumbnailer \
     fzf \
     xclip \
+    python3-pynvim \
     curl \
     fastfetch \
-|| log_error "Fallo al instalar paquetes esenciales."
+    || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
 log_info "Instalando Oh My Zsh..."
@@ -83,10 +84,10 @@ fi
 # --- 5. Instalar Neovim (versión reciente) ---
 log_info "Instalando Neovim $NVIM_VERSION..."
 # Verificar si Neovim ya está instalado y es la versión deseada
-CURRENT_NVIM_VERSION=$("$NVIM_INSTALL_PATH/bin/nvim" --version 2>/dev/null | head -n 1 | awk '{print $2}' | sed 's/^v//')
+CURRENT_NVIM_VERSION=$( "$NVIM_INSTALL_PATH/bin/nvim" --version 2>/dev/null | head -n 1 | awk '{print $2}' | sed 's/^v//')
 if [ ! -d "$NVIM_INSTALL_PATH" ] || [ ! -f "$NVIM_INSTALL_PATH/bin/nvim" ] || [ "$CURRENT_NVIM_VERSION" != "$NVIM_VERSION" ]; then
     log_info "Descargando Neovim $NVIM_VERSION..."
-# Usar un directorio temporal para la descarga para evitar conflictos si el script se ejecuta desde ~/Descargas
+    # Usar un directorio temporal para la descarga para evitar conflictos si el script se ejecuta desde ~/Descargas
     TEMP_DOWNLOAD_DIR=$(mktemp -d)
     curl -L "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/$NVIM_TAR_GZ" -o "$TEMP_DOWNLOAD_DIR/$NVIM_TAR_GZ" || log_error "Fallo al descargar Neovim."
     
@@ -120,13 +121,41 @@ log_info "Configurando kickstart.nvim..."
 rm -rf "$HOME/.config/nvim"
 git clone https://github.com/folke/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}/nvim" || log_error "Fallo al clonar kickstart.nvim."
 
+# --- 7. Configurar Zsh como shell por defecto ---
+log_info "Configurando Zsh como shell por defecto..."
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+    chsh -s "$(which zsh)" || log_error "Fallo al cambiar el shell por defecto a Zsh. Por favor, hazlo manualmente con 'chsh -s \\
+$(which zsh)' y reinicia tu sesión."
+else
+    log_warn "Zsh ya es el shell por defecto. Saltando configuración."
+fi
 
-# --- 7. Pasos finales ---
-log_info "Recargando Zsh..."
-source "$HOME/.zshrc"
+# --- 8. Crear ~/.xinitrc para iniciar i3 ---
+log_info "Creando ~/.xinitrc para iniciar i3..."
+if [ ! -f "$HOME/.xinitrc" ]; then
+    echo "exec i3" > "$HOME/.xinitrc" || log_error "Fallo al crear ~/.xinitrc."
+    log_info "Archivo ~/.xinitrc creado con 'exec i3'."
+else
+    # Verificar si ya contiene 'exec i3'
+    if ! grep -q "exec i3" "$HOME/.xinitrc"; then
+        echo "exec i3" >> "$HOME/.xinitrc" || log_error "Fallo al añadir 'exec i3' a ~/.xinitrc."
+        log_info "Añadido 'exec i3' a ~/.xinitrc."
+    else
+        log_warn "~/.xinitrc ya existe y contiene 'exec i3'. Saltando creación."
+    fi
+fi
+chmod +x "$HOME/.xinitrc" # Asegurarse de que sea ejecutable
 
-log_info "Recargando i3 (si está en ejecución)..."
-i3-msg reload 2>/dev/null || log_warn "i3 no está en ejecución o no se pudo recargar."
-
-log_info "Instalación de dotfiles completada. Por favor, abre Neovim (nvim) para que instale sus plugins."
+# --- 9. Pasos finales y recomendación de reinicio ---
+log_info "Instalación de dotfiles completada."
+log_info "Por favor, abre Neovim (nvim) para que instale sus plugins."
 log_info "Si es la primera vez, es posible que necesites reiniciar tu sesión de X para que todos los cambios surtan efecto."
+
+read -p "¿Deseas reiniciar el sistema ahora? (s/N): " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Ss]$ ]]; then
+    log_info "Reiniciando el sistema..."
+    sudo reboot
+else
+    log_info "Reinicio pospuesto. Recuerda reiniciar manualmente para que todos los cambios surtan efecto."
+fi
