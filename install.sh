@@ -2,7 +2,7 @@
 
 # --- Configuración ---
 DOTFILES_DIR="$HOME/dotfiles"
-NVIM_VERSION="0.10.0" # Puedes cambiar esto a la versión que desees o "latest"
+NVIM_VERSION="0.11.0"
 NVIM_TAR_GZ="nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_PATH="/opt/neovim"
 
