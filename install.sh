@@ -2,7 +2,7 @@
 
 # --- Configuración ---
 DOTFILES_DIR="$HOME/dotfiles"
-NVIM_VERSION="0.10.0" # Puedes cambiar esto a la versión que desees o "latest"
+NVIM_VERSION="0.11.0" 
 NVIM_TAR_GZ="nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_PATH="/opt/neovim"
 
@@ -51,7 +51,8 @@ sudo nala install -y \
     ffmpegthumbnailer \
     fzf \
     xclip \
-    python3-pynvim \
+    curl \
+    fastfetch \
 || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
