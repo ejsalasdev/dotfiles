@@ -2,7 +2,6 @@
 
 # --- Configuración ---
 DOTFILES_DIR="$HOME/dotfiles"
-NVIM_VERSION="0.11.0"
 NVIM_TAR_GZ="nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_PATH="/opt/neovim"
 
@@ -28,6 +27,7 @@ sudo nala update && sudo nala upgrade -y || log_error "Fallo al actualizar el si
 log_info "Instalando paquetes esenciales..."
 sudo nala install -y \
     xorg \
+    i3 \
     build-essential \
     git \
     zsh \
@@ -82,12 +82,20 @@ else
 fi
 
 # --- 5. Instalar Neovim (versión reciente) ---
-log_info "Instalando Neovim $NVIM_VERSION..."
+log_info "Instalando la última versión de Neovim..."
+
+# Obtener la última versión de Neovim
+NVIM_VERSION=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | grep "tag_name" | cut -d '"' -f 4 | sed 's/^v//')
+if [ -z "$NVIM_VERSION" ]; then
+    log_error "Fallo al obtener la última versión de Neovim de GitHub."
+fi
+log_info "Última versión de Neovim encontrada: v$NVIM_VERSION"
+
 # Verificar si Neovim ya está instalado y es la versión deseada
-CURRENT_NVIM_VERSION=$( "$NVIM_INSTALL_PATH/bin/nvim" --version 2>/dev/null | head -n 1 | awk '{print $2}' | sed 's/^v//')
+CURRENT_NVIM_VERSION=$("$NVIM_INSTALL_PATH/bin/nvim" --version 2>/dev/null | head -n 1 | awk '{print $2}' | sed 's/^v//')
 if [ ! -d "$NVIM_INSTALL_PATH" ] || [ ! -f "$NVIM_INSTALL_PATH/bin/nvim" ] || [ "$CURRENT_NVIM_VERSION" != "$NVIM_VERSION" ]; then
-    log_info "Descargando Neovim $NVIM_VERSION..."
-    # Usar un directorio temporal para la descarga para evitar conflictos si el script se ejecuta desde ~/Descargas
+    log_info "Descargando Neovim v$NVIM_VERSION..."
+    # Usar un directorio temporal para la descarga
     TEMP_DOWNLOAD_DIR=$(mktemp -d)
     curl -L "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/$NVIM_TAR_GZ" -o "$TEMP_DOWNLOAD_DIR/$NVIM_TAR_GZ" || log_error "Fallo al descargar Neovim."
     
@@ -96,7 +104,7 @@ if [ ! -d "$NVIM_INSTALL_PATH" ] || [ ! -f "$NVIM_INSTALL_PATH/bin/nvim" ] || [ 
     sudo mv "/opt/nvim-linux-x86_64" "$NVIM_INSTALL_PATH" || log_error "Fallo al renombrar directorio de Neovim."
     rm -rf "$TEMP_DOWNLOAD_DIR" # Limpiar el directorio temporal
 else
-    log_warn "Neovim $NVIM_VERSION ya está instalado en $NVIM_INSTALL_PATH. Saltando instalación."
+    log_warn "Neovim v$NVIM_VERSION ya está instalado en $NVIM_INSTALL_PATH. Saltando instalación."
 fi
 
 # --- 6. Desplegar Dotfiles (crear enlaces simbólicos) ---
@@ -124,8 +132,7 @@ git clone https://github.com/folke/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/
 # --- 7. Configurar Zsh como shell por defecto ---
 log_info "Configurando Zsh como shell por defecto..."
 if [ "$(basename "$SHELL")" != "zsh" ]; then
-    chsh -s "$(which zsh)" || log_error "Fallo al cambiar el shell por defecto a Zsh. Por favor, hazlo manualmente con 'chsh -s \\
-$(which zsh)' y reinicia tu sesión."
+    chsh -s "$(which zsh)" || log_error "Fallo al cambiar el shell por defecto a Zsh. Por favor, hazlo manualmente con 'chsh -s \$(which zsh)' y reinicia tu sesión."
 else
     log_warn "Zsh ya es el shell por defecto. Saltando configuración."
 fi
@@ -144,7 +151,6 @@ else
         log_warn "~/.xinitrc ya existe y contiene 'exec i3'. Saltando creación."
     fi
 fi
-chmod +x "$HOME/.xinitrc" # Asegurarse de que sea ejecutable
 
 # --- 9. Pasos finales y recomendación de reinicio ---
 log_info "Instalación de dotfiles completada."
