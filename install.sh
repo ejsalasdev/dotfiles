@@ -88,7 +88,7 @@ if [ ! -d "$NVIM_INSTALL_PATH" ] || [ ! -f "$NVIM_INSTALL_PATH/bin/nvim" ] || [ 
     log_info "Descargando Neovim $NVIM_VERSION..."
 # Usar un directorio temporal para la descarga para evitar conflictos si el script se ejecuta desde ~/Descargas
     TEMP_DOWNLOAD_DIR=$(mktemp -d)
-    curl -LO "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/$NVIM_TAR_GZ" -o "$TEMP_DOWNLOAD_DIR/$NVIM_TAR_GZ" || log_error "Fallo al descargar Neovim."
+    curl -L "https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/$NVIM_TAR_GZ" -o "$TEMP_DOWNLOAD_DIR/$NVIM_TAR_GZ" || log_error "Fallo al descargar Neovim."
     
     sudo rm -rf "$NVIM_INSTALL_PATH"
     sudo tar -C /opt -xzf "$TEMP_DOWNLOAD_DIR/$NVIM_TAR_GZ" || log_error "Fallo al extraer Neovim."
