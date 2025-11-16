@@ -148,11 +148,6 @@ fi
 
 # --- 8. Configurar entorno para Neovim ---
 log_info "Configurando entorno para Neovim..."
-# Eliminar versión antigua de nvim si existe, para evitar conflictos
-if [ -f "/usr/bin/nvim" ]; then
-    log_info "Eliminando versión antigua de nvim en /usr/bin/nvim..."
-    sudo rm -f /usr/bin/nvim
-fi
 
 # Añadir Neovim al PATH en .zshrc (al principio para darle prioridad)
 ZSHRC_PATH="$HOME/.zshrc"
