@@ -54,6 +54,9 @@ sudo nala install -y \
     python3-pynvim \
     curl \
     fastfetch \
+    eza \
+    tree \
+    bat \
     || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---

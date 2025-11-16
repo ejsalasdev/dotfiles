@@ -56,5 +56,5 @@ alias un='sudo nala remove -y' # Desinstalar paquetes
 source /usr/share/doc/fzf/examples/completion.zsh
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 
-# Add Neovim to PATH
-export PATH="/opt/neovim/bin:$PATH"
+# Configure PATH for Neovim and user local binaries
+export PATH="/opt/neovim/bin:$HOME/.local/bin:$PATH"
