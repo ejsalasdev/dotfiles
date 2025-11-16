@@ -57,4 +57,4 @@ source /usr/share/doc/fzf/examples/completion.zsh
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 # Add Neovim to PATH
-export PATH="$PATH:/opt/neovim/bin"
+export PATH="/opt/neovim/bin:$PATH"

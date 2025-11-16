@@ -147,15 +147,7 @@ else
 fi
 
 # --- 8. Configurar entorno para Neovim ---
-log_info "Configurando entorno para Neovim..."
-
-# Añadir Neovim al PATH en .zshrc (al principio para darle prioridad)
-ZSHRC_PATH="$HOME/.zshrc"
-NVIM_PATH_LINE='export PATH="/opt/neovim/bin:$PATH"'
-if ! grep -qF "$NVIM_PATH_LINE" "$ZSHRC_PATH"; then
-    echo -e "\n# Add Neovim to PATH\n$NVIM_PATH_LINE" >> "$ZSHRC_PATH"
-    log_info "Añadido Neovim al PATH en $ZSHRC_PATH."
-fi
+log_info "Configuración del PATH de Neovim gestionada en .zshrc."
 
 # --- 9. Crear ~/.xinitrc para iniciar i3 ---
 log_info "Creando ~/.xinitrc para iniciar i3..."
