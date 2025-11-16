@@ -146,7 +146,23 @@ else
     log_warn "Zsh ya es el shell por defecto. Saltando configuración."
 fi
 
-# --- 8. Crear ~/.xinitrc para iniciar i3 ---
+# --- 8. Configurar entorno para Neovim ---
+log_info "Configurando entorno para Neovim..."
+# Eliminar versión antigua de nvim si existe, para evitar conflictos
+if [ -f "/usr/bin/nvim" ]; then
+    log_info "Eliminando versión antigua de nvim en /usr/bin/nvim..."
+    sudo rm -f /usr/bin/nvim
+fi
+
+# Añadir Neovim al PATH en .zshrc (al principio para darle prioridad)
+ZSHRC_PATH="$HOME/.zshrc"
+NVIM_PATH_LINE='export PATH="/opt/neovim/bin:$PATH"'
+if ! grep -qF "$NVIM_PATH_LINE" "$ZSHRC_PATH"; then
+    echo -e "\n# Add Neovim to PATH\n$NVIM_PATH_LINE" >> "$ZSHRC_PATH"
+    log_info "Añadido Neovim al PATH en $ZSHRC_PATH."
+fi
+
+# --- 9. Crear ~/.xinitrc para iniciar i3 ---
 log_info "Creando ~/.xinitrc para iniciar i3..."
 if [ ! -f "$HOME/.xinitrc" ]; then
     echo "exec i3" > "$HOME/.xinitrc" || log_error "Fallo al crear ~/.xinitrc."
@@ -161,7 +177,7 @@ else
     fi
 fi
 
-# --- 9. Pasos finales y recomendación de reinicio ---
+# --- 10. Pasos finales y recomendación de reinicio ---
 log_info "Instalación de dotfiles completada."
 log_info "Por favor, abre Neovim (nvim) para que instale sus plugins."
 log_info "Si es la primera vez, es posible que necesites reiniciar tu sesión de X para que todos los cambios surtan efecto."
