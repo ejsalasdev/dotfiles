@@ -78,6 +78,16 @@ sudo nala install -y \
     wireplumber \
     libspa-0.2-bluetooth \
     pavucontrol \
+    xbacklight \
+    x11-utils \
+    polybar \
+    dex \
+    i3lock \
+    xss-lock \
+    network-manager-gnome \
+    flameshot \
+    xdg-desktop-portal-gtk \
+    dconf-cli \
     || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
@@ -155,6 +165,11 @@ ln -sf "$DOTFILES_DIR/.config/i3/scripts/exit_prompt.sh" "$HOME/.config/i3/scrip
 # .config/rofi
 mkdir -p "$HOME/.config/rofi"
 ln -sf "$DOTFILES_DIR/.config/rofi/config.rasi" "$HOME/.config/rofi/config.rasi" || log_error "Fallo al enlazar rofi/config.rasi"
+
+# .config/polybar
+mkdir -p "$HOME/.config/polybar"
+ln -sf "$DOTFILES_DIR/.config/polybar/config.ini" "$HOME/.config/polybar/config.ini" || log_error "Fallo al enlazar polybar/config.ini"
+ln -sf "$DOTFILES_DIR/.config/polybar/launch.sh" "$HOME/.config/polybar/launch.sh" || log_error "Fallo al enlazar polybar/launch.sh"
 
 # .config/nvim (kickstart)
 log_info "Configurando kickstart.nvim..."

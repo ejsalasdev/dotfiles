@@ -11,6 +11,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id setxkbmap latam
 exec --no-startup-id feh --bg-scale $HOME/Imágenes/firewatch.jpg
 exec --no-startup-id picom
+exec --no-startup-id /usr/libexec/xdg-desktop-portal-gtk
 
 # Configuración de ventanas flotantes
 floating_modifier $mod
@@ -20,6 +21,9 @@ tiling_drag modifier titlebar
 # Terminal y lanzador de aplicaciones
 bindsym $mod+Return exec alacritty
 bindsym $mod+d exec rofi -show drun
+
+# Captura de pantalla con flameshot
+bindsym Print exec flameshot gui
 
 # Cerrar ventana
 bindsym $mod+q kill
@@ -72,6 +76,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# Control de brillo (requiere xbacklight)
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+
 # Workspaces
 set $ws1 "1"
 set $ws2 "2"
@@ -109,9 +117,12 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # Control de i3
-bindsym $mod+Shift+c reload # Recargar configuración
-bindsym $mod+Shift+r restart # Reiniciar i3
-bindsym $mod+Shift+e exec --no-startup-id $HOME/.config/i3/scripts/exit_prompt.sh # Salir de i3
+# Recargar configuración
+bindsym $mod+Shift+c reload
+# Reiniciar i3
+bindsym $mod+Shift+r restart
+# Salir de i3
+bindsym $mod+Shift+e exec --no-startup-id $HOME/.config/i3/scripts/exit_prompt.sh
 
 # Atajo de prueba para i3-nagbar
 bindsym $mod+x exec i3-nagbar -m "¡Esto es una prueba de i3-nagbar!"
@@ -134,7 +145,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Barra de estado
-bar {
-        status_command i3status
-}
+# Barra de estado (Polybar)
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Barra de estado (i3status) - Comentado para usar Polybar
+# bar {
+#         status_command i3status
+# }
