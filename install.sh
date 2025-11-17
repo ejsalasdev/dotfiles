@@ -73,6 +73,11 @@ sudo nala install -y \
     eza \
     tree \
     bat \
+    pipewire \
+    pipewire-pulse \
+    wireplumber \
+    libspa-0.2-bluetooth \
+    pavucontrol \
     || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
