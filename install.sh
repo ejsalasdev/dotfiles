@@ -4,6 +4,8 @@
 DOTFILES_DIR="$HOME/dotfiles"
 NVIM_TAR_GZ="nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_PATH="/opt/neovim"
+WALLPAPER_SOURCE="$DOTFILES_DIR/assets/bg/firewatch.jpg"
+WALLPAPER_DEST="$HOME/Imágenes/firewatch.jpg"
 
 # --- Funciones de ayuda ---
 log_info() {
@@ -18,6 +20,20 @@ log_error() {
     echo -e "\e[31mERROR:\e[0m $1"
     exit 1
 }
+
+# Función para asegurar que nala esté instalado
+ensure_nala() {
+    if ! command -v nala &> /dev/null; then
+        log_info "Nala no encontrado. Instalando Nala..."
+        sudo apt update || log_error "Fallo al actualizar apt."
+        sudo apt install -y nala || log_error "Fallo al instalar Nala."
+    else
+        log_warn "Nala ya está instalado. Saltando instalación."
+    fi
+}
+
+# --- 0. Asegurar Nala ---
+ensure_nala
 
 # --- 1. Actualizar el sistema ---
 log_info "Actualizando el sistema..."
@@ -167,7 +183,12 @@ else
     fi
 fi
 
-# --- 10. Pasos finales y recomendación de reinicio ---
+# --- 10. Copiar fondo de pantalla ---
+log_info "Copiando fondo de pantalla..."
+mkdir -p "$HOME/Imágenes" || log_error "Fallo al crear el directorio $HOME/Imágenes."
+cp "$WALLPAPER_SOURCE" "$WALLPAPER_DEST" || log_error "Fallo al copiar el fondo de pantalla."
+
+# --- 11. Pasos finales y recomendación de reinicio ---
 log_info "Instalación de dotfiles completada."
 log_info "Por favor, abre Neovim (nvim) para que instale sus plugins."
 log_info "Si es la primera vez, es posible que necesites reiniciar tu sesión de X para que todos los cambios surtan efecto."
@@ -180,3 +201,4 @@ if [[ $REPLY =~ ^[Ss]$ ]]; then
 else
     log_info "Reinicio pospuesto. Recuerda reiniciar manualmente para que todos los cambios surtan efecto."
 fi
+
