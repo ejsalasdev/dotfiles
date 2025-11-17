@@ -3,6 +3,10 @@
 # Configuración básica
 set $mod Mod4
 font pango:monospace 12
+default_border pixel 2
+# Gaps
+gaps outer 3
+gaps inner 3
 
 # Comandos de inicio automático
 exec --no-startup-id dex --autostart --environment i3
@@ -12,6 +16,7 @@ exec --no-startup-id setxkbmap latam
 exec --no-startup-id feh --bg-scale $HOME/Imágenes/firewatch.jpg
 exec --no-startup-id picom
 exec --no-startup-id /usr/libexec/xdg-desktop-portal-gtk
+exec_always --no-startup-id dunst
 
 # Configuración de ventanas flotantes
 floating_modifier $mod

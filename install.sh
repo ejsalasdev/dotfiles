@@ -88,6 +88,8 @@ sudo nala install -y \
     flameshot \
     xdg-desktop-portal-gtk \
     dconf-cli \
+    dunst \
+    libnotify-bin \
     || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
@@ -170,6 +172,10 @@ ln -sf "$DOTFILES_DIR/.config/rofi/config.rasi" "$HOME/.config/rofi/config.rasi"
 mkdir -p "$HOME/.config/polybar"
 ln -sf "$DOTFILES_DIR/.config/polybar/config.ini" "$HOME/.config/polybar/config.ini" || log_error "Fallo al enlazar polybar/config.ini"
 ln -sf "$DOTFILES_DIR/.config/polybar/launch.sh" "$HOME/.config/polybar/launch.sh" || log_error "Fallo al enlazar polybar/launch.sh"
+
+# .config/dunst
+mkdir -p "$HOME/.config/dunst"
+ln -sf "$DOTFILES_DIR/.config/dunst/dunstrc" "$HOME/.config/dunst/dunstrc" || log_error "Fallo al enlazar dunstrc"
 
 # .config/nvim (kickstart)
 log_info "Configurando kickstart.nvim..."
