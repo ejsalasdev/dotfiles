@@ -2,7 +2,7 @@
 #
 # Configuración básica
 set $mod Mod4
-font pango:monospace 12
+font pango:JetBrains Mono 10
 default_border pixel 2
 # Gaps
 gaps outer 3
@@ -25,7 +25,7 @@ tiling_drag modifier titlebar
 # Atajos de teclado
 # Terminal y lanzador de aplicaciones
 bindsym $mod+Return exec alacritty
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec "rofi -show drun -show-icons"
 
 # Captura de pantalla con flameshot
 bindsym Print exec flameshot gui

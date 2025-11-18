@@ -90,6 +90,8 @@ sudo nala install -y \
     dconf-cli \
     dunst \
     libnotify-bin \
+    fonts-font-awesome \
+    fonts-jetbrains-mono \
     || log_error "Fallo al instalar paquetes esenciales."
 
 # --- 3. Instalar Oh My Zsh ---
@@ -167,6 +169,18 @@ ln -sf "$DOTFILES_DIR/.config/i3/scripts/exit_prompt.sh" "$HOME/.config/i3/scrip
 # .config/rofi
 mkdir -p "$HOME/.config/rofi"
 ln -sf "$DOTFILES_DIR/.config/rofi/config.rasi" "$HOME/.config/rofi/config.rasi" || log_error "Fallo al enlazar rofi/config.rasi"
+mkdir -p "$HOME/.config/rofi/scripts"
+ln -sf "$DOTFILES_DIR/.config/rofi/scripts/powermenu.sh" "$HOME/.config/rofi/scripts/powermenu.sh" || log_error "Fallo al enlazar rofi/powermenu.sh"
+ln -sf "$DOTFILES_DIR/.config/rofi/powermenu.rasi" "$HOME/.config/rofi/powermenu.rasi" || log_error "Fallo al enlazar rofi/powermenu.rasi"
+ln -sf "$DOTFILES_DIR/.config/rofi/confirm.rasi" "$HOME/.config/rofi/confirm.rasi" || log_error "Fallo al enlazar rofi/confirm.rasi"
+
+# Clonar temas de Rofi
+if [ ! -d "$HOME/.config/rofi/rofi-themes" ]; then
+    log_info "Clonando temas de Rofi..."
+    git clone https://github.com/adi1090x/rofi.git "$HOME/.config/rofi/rofi-themes" || log_error "Fallo al clonar los temas de Rofi."
+else
+    log_warn "El directorio de temas de Rofi ya existe. Saltando clonación."
+fi
 
 # .config/polybar
 mkdir -p "$HOME/.config/polybar"
@@ -176,6 +190,18 @@ ln -sf "$DOTFILES_DIR/.config/polybar/launch.sh" "$HOME/.config/polybar/launch.s
 # .config/dunst
 mkdir -p "$HOME/.config/dunst"
 ln -sf "$DOTFILES_DIR/.config/dunst/dunstrc" "$HOME/.config/dunst/dunstrc" || log_error "Fallo al enlazar dunstrc"
+
+# .config/gtk-3.0
+mkdir -p "$HOME/.config/gtk-3.0"
+ln -sf "$DOTFILES_DIR/.config/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/settings.ini" || log_error "Fallo al enlazar gtk-3.0/settings.ini"
+
+# .config/gtk-2.0
+mkdir -p "$HOME/.config/gtk-2.0"
+ln -sf "$DOTFILES_DIR/.config/gtk-2.0/gtkrc" "$HOME/.config/gtk-2.0/gtkrc" || log_error "Fallo al enlazar gtk-2.0/gtkrc"
+
+# .config/alacritty
+mkdir -p "$HOME/.config/alacritty"
+ln -sf "$DOTFILES_DIR/.config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml" || log_error "Fallo al enlazar alacritty.toml"
 
 # .config/nvim (kickstart)
 log_info "Configurando kickstart.nvim..."

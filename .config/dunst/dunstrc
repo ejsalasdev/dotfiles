@@ -16,7 +16,7 @@
     idle_threshold = 120
     
     # Font
-    font = Monospace 10
+    font = JetBrains Mono 10
 
     # Formatting
     format = "<b>%s</b>\n%b"

@@ -1,0 +1,46 @@
+/* Rofi Power Menu Theme */
+
+* {
+    background-color:   #282A2E;
+    text-color:         #C5C8C6;
+    font:               "Monospace 12";
+}
+
+window {
+    location:   center;
+    anchor:     center;
+    transparency: "real";
+    border:       2px;
+    border-color: #83a598;
+    border-radius: 6px;
+    width:      15%;
+}
+
+mainbox {
+    children:   [ listview ];
+    spacing:    10px;
+    padding:    10px;
+}
+
+listview {
+    lines:      4;
+    columns:    1;
+    layout:     vertical;
+}
+
+element {
+    padding:        8px;
+    border-radius:  4px;
+    text-color:     #C5C8C6;
+}
+
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+    horizontal-align: 0.5;
+}
+
+element.selected {
+    background-color:   #3971ED;
+    text-color:         #282A2E;
+}
