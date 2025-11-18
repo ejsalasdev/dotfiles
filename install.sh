@@ -90,6 +90,7 @@ sudo nala install -y \
     dconf-cli \
     dunst \
     libnotify-bin \
+    arandr \
     fonts-font-awesome \
     || log_error "Fallo al instalar paquetes esenciales."
 
