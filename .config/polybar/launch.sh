@@ -4,7 +4,7 @@
 killall -q polybar
 
 # Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+while pgrep -x polybar >/dev/null; do sleep 1; done
 
 # Find and export network interfaces
 for i in $(ip link | grep 'state UP' | cut -d':' -f2); do
@@ -15,7 +15,13 @@ for i in $(ip link | grep 'state UP' | cut -d':' -f2); do
     fi
 done
 
-# Launch Polybar, using default config location ~/.config/polybar/config.ini
-polybar mybar &
+# Launch Polybar on all connected monitors
+if type "xrandr" > /dev/null; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+    MONITOR=$m polybar --reload mybar &
+  done
+else
+  polybar --reload mybar &
+fi
 
 echo "Polybar launched..."

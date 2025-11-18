@@ -1,0 +1,2 @@
+# Ignorar archivos de backup de Alacritty
+.config/alacritty/alacritty.yml
