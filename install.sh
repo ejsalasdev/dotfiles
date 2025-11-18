@@ -91,8 +91,35 @@ sudo nala install -y \
     dunst \
     libnotify-bin \
     fonts-font-awesome \
-    fonts-jetbrains-mono \
     || log_error "Fallo al instalar paquetes esenciales."
+
+# Instalar Nerd Font
+log_info "Instalando JetBrains Mono Nerd Font..."
+if [ ! -f "$HOME/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf" ]; then
+    mkdir -p /tmp/nerdfont
+    wget -O /tmp/nerdfont/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip || log_error "Fallo al descargar Nerd Font."
+    unzip /tmp/nerdfont/JetBrainsMono.zip -d /tmp/nerdfont/
+    mkdir -p "$HOME/.local/share/fonts"
+    mv /tmp/nerdfont/*.ttf "$HOME/.local/share/fonts/"
+    rm -rf /tmp/nerdfont
+    fc-cache -fv || log_warn "Fallo al actualizar la caché de fuentes."
+else
+    log_warn "JetBrains Mono Nerd Font ya está instalada. Saltando."
+fi
+
+# Instalar Nerd Font
+log_info "Instalando JetBrains Mono Nerd Font..."
+if [ ! -f "$HOME/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf" ]; then
+    mkdir -p /tmp/nerdfont
+    wget -O /tmp/nerdfont/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip || log_error "Fallo al descargar Nerd Font."
+    unzip /tmp/nerdfont/JetBrainsMono.zip -d /tmp/nerdfont/
+    mkdir -p "$HOME/.local/share/fonts"
+    mv /tmp/nerdfont/*.ttf "$HOME/.local/share/fonts/"
+    rm -rf /tmp/nerdfont
+    fc-cache -fv || log_warn "Fallo al actualizar la caché de fuentes."
+else
+    log_warn "JetBrains Mono Nerd Font ya está instalada. Saltando."
+fi
 
 # --- 3. Instalar Oh My Zsh ---
 log_info "Instalando Oh My Zsh..."
@@ -202,6 +229,10 @@ ln -sf "$DOTFILES_DIR/.config/gtk-2.0/gtkrc" "$HOME/.config/gtk-2.0/gtkrc" || lo
 # .config/alacritty
 mkdir -p "$HOME/.config/alacritty"
 ln -sf "$DOTFILES_DIR/.config/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml" || log_error "Fallo al enlazar alacritty.toml"
+
+# .config/fastfetch
+mkdir -p "$HOME/.config/fastfetch"
+ln -sf "$DOTFILES_DIR/.config/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc" || log_error "Fallo al enlazar fastfetch/config.jsonc"
 
 # .config/nvim (kickstart)
 log_info "Configurando kickstart.nvim..."

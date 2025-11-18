@@ -2,7 +2,7 @@
 #
 # Configuración básica
 set $mod Mod4
-font pango:JetBrains Mono 10
+font pango:JetBrainsMono Nerd Font 10
 default_border pixel 2
 # Gaps
 gaps outer 3
