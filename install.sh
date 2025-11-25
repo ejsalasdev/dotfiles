@@ -51,24 +51,37 @@ create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
 echo -e "\nConfigurando Wofi..."
 create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
 
-# --- Fuentes ---
-install_fonts() {
-    echo -e "\n${BLUE}Verificando fuentes...${NC}"
-    FONT_PKG="ttf-jetbrains-mono-nerd"
+# --- Waybar ---
+echo -e "\nConfigurando Waybar..."
+create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
+
+# --- Paquetes y Fuentes ---
+install_packages() {
+    echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
     if command -v pacman &> /dev/null; then
-        if ! pacman -Qi $FONT_PKG &> /dev/null; then
-            echo -e "${BLUE}Instalando $FONT_PKG... (requiere sudo)${NC}"
-            sudo pacman -S --noconfirm $FONT_PKG
-            echo -e "${GREEN}Fuente instalada correctamente.${NC}"
-        else
-            echo -e "${BLUE}$FONT_PKG ya está instalada.${NC}"
+        # Lista de paquetes a verificar/instalar
+        PACKAGES=("ttf-jetbrains-mono-nerd" "waybar")
+        TO_INSTALL=()
+
+        for pkg in "${PACKAGES[@]}"; do
+            if ! pacman -Qi $pkg &> /dev/null; then
+                TO_INSTALL+=("$pkg")
+            else
+                echo -e "${BLUE}$pkg ya está instalado.${NC}"
+            fi
+        done
+
+        if [ ${#TO_INSTALL[@]} -gt 0 ]; then
+            echo -e "${BLUE}Instalando: ${TO_INSTALL[*]}... (requiere sudo)${NC}"
+            sudo pacman -S --noconfirm "${TO_INSTALL[@]}"
+            echo -e "${GREEN}Paquetes instalados.${NC}"
         fi
     else
-        echo -e "${BLUE}No se detectó pacman. Por favor instala 'JetBrainsMono Nerd Font' manualmente.${NC}"
+        echo -e "${BLUE}No se detectó pacman. Asegúrate de tener instalado: ttf-jetbrains-mono-nerd, waybar${NC}"
     fi
 }
 
-install_fonts
+install_packages
 
 echo -e "${GREEN}Instalación completada.${NC}"

@@ -1,0 +1,53 @@
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #cdd6f4;
+}
+
+#workspaces {
+    background-color: #1e1e2e;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 0 5px;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    color: #cdd6f4;
+    border-radius: 10px;
+}
+
+#workspaces button.active {
+    color: #33ccff;
+}
+
+#clock, #network, #pulseaudio, #cpu, #memory, #tray {
+    padding: 0 10px;
+    color: #cdd6f4;
+    background-color: #1e1e2e;
+    border-radius: 10px;
+    margin: 5px 2px;
+}
+
+#clock {
+    color: #33ccff;
+    font-weight: bold;
+}
+
+#network { color: #89b4fa; }
+#cpu { color: #fab387; }
+#memory { color: #f9e2af; }
+#pulseaudio { color: #f5c2e7; }
+
+#network.disconnected, #pulseaudio.muted {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+}
