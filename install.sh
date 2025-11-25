@@ -43,6 +43,10 @@ create_symlink() {
 echo -e "\nConfigurando Hyprland..."
 create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
 
+# --- Kitty ---
+echo -e "\nConfigurando Kitty..."
+create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
+
 # --- Fuentes ---
 install_fonts() {
     echo -e "\n${BLUE}Verificando fuentes...${NC}"
