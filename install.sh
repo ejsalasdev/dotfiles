@@ -47,6 +47,10 @@ create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
 echo -e "\nConfigurando Kitty..."
 create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
 
+# --- Wofi ---
+echo -e "\nConfigurando Wofi..."
+create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
+
 # --- Fuentes ---
 install_fonts() {
     echo -e "\n${BLUE}Verificando fuentes...${NC}"
