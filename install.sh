@@ -43,4 +43,24 @@ create_symlink() {
 echo -e "\nConfigurando Hyprland..."
 create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
 
+# --- Fuentes ---
+install_fonts() {
+    echo -e "\n${BLUE}Verificando fuentes...${NC}"
+    FONT_PKG="ttf-jetbrains-mono-nerd"
+    
+    if command -v pacman &> /dev/null; then
+        if ! pacman -Qi $FONT_PKG &> /dev/null; then
+            echo -e "${BLUE}Instalando $FONT_PKG... (requiere sudo)${NC}"
+            sudo pacman -S --noconfirm $FONT_PKG
+            echo -e "${GREEN}Fuente instalada correctamente.${NC}"
+        else
+            echo -e "${BLUE}$FONT_PKG ya está instalada.${NC}"
+        fi
+    else
+        echo -e "${BLUE}No se detectó pacman. Por favor instala 'JetBrainsMono Nerd Font' manualmente.${NC}"
+    fi
+}
+
+install_fonts
+
 echo -e "${GREEN}Instalación completada.${NC}"
