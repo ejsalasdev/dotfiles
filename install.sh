@@ -61,7 +61,13 @@ install_packages() {
     
     if command -v pacman &> /dev/null; then
         # Lista de paquetes a verificar/instalar
-        PACKAGES=("ttf-jetbrains-mono-nerd" "waybar")
+        PACKAGES=(
+            "ttf-jetbrains-mono-nerd" 
+            "waybar" 
+            "xdg-desktop-portal-hyprland" 
+            "xdg-desktop-portal-gtk"
+            "hyprpaper"
+        )
         TO_INSTALL=()
 
         for pkg in "${PACKAGES[@]}"; do
@@ -76,9 +82,11 @@ install_packages() {
             echo -e "${BLUE}Instalando: ${TO_INSTALL[*]}... (requiere sudo)${NC}"
             sudo pacman -S --noconfirm "${TO_INSTALL[@]}"
             echo -e "${GREEN}Paquetes instalados.${NC}"
+        else
+            echo -e "${GREEN}Todos los paquetes necesarios están instalados.${NC}"
         fi
     else
-        echo -e "${BLUE}No se detectó pacman. Asegúrate de tener instalado: ttf-jetbrains-mono-nerd, waybar${NC}"
+        echo -e "${BLUE}No se detectó pacman. Asegúrate de tener instalado: ${PACKAGES[*]}${NC}"
     fi
 }
 
