@@ -77,7 +77,7 @@ install_packages() {
         )
         
         AUDIO_PKGS=(
-            "pipewire" "pipewire-pulse" "wireplumber" "pavucontrol"
+            "pipewire" "pipewire-pulse" "wireplumber" "pavucontrol" "pamixer"
         )
         
         THEME_PKGS=(
@@ -86,7 +86,7 @@ install_packages() {
         )
         
         UTILS_PKGS=(
-            "grim" "slurp" "wl-clipboard" "git" "curl"
+            "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
         )
 
         # Unir todas las listas
