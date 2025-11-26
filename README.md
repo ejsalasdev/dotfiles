@@ -57,6 +57,10 @@ El objetivo de este proyecto es proporcionar un entorno de trabajo fluido, esté
 | `SUPER + E` | Gestor de Archivos (Thunar) |
 | `SUPER + SHIFT + R` | Recargar configuración (Hyprland/Waybar) |
 | `SUPER + M` | Salir de la sesión |
+| `SUPER + L` | Bloquear pantalla (Swaylock) |
+| `SUPER + Arrow Keys` | Redimensionar ventana activa |
+| `SUPER + SHIFT + Arrow Keys` | Mover foco entre ventanas |
+| `SUPER + SHIFT + Left/Right` | Mover ventana a workspace |
 | `PRINT` | Captura de pantalla completa (al portapapeles) |
 | `SUPER + PRINT` | Captura de región (al portapapeles) |
 | `Teclas Multimedia` | Control de Volumen y Brillo (con OSD) |

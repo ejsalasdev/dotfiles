@@ -69,7 +69,7 @@ install_packages() {
         CORE_PKGS=(
             "hyprland" "kitty" "waybar" "wofi" "hyprpaper" "dunst" "libnotify" 
             "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk"
-            "polkit-gnome" # Agente de autenticación ligero
+            "polkit-gnome" "swaylock" "swayidle" # Agente de autenticación ligero
         )
         
         FILE_MANAGER_PKGS=(
