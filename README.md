@@ -9,7 +9,6 @@ El objetivo de este proyecto es proporcionar un entorno de trabajo fluido, esté
 
 ## 📸 Preview
 
-*(Sube una captura de pantalla aquí. Puedes usar `SUPER + PRINT` para tomarla)*
 ![Screenshot](./screenshot.png)
 
 ## 🛠️ Tech Stack
