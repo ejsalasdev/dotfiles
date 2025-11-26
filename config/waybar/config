@@ -6,23 +6,28 @@
     "margin-top": 5,
     "margin-left": 10,
     "margin-right": 10,
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "tray"],
-
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "tray"
+    ],
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "format": "{icon}",
         "format-icons": {
-            "1": "一",
-            "2": "二",
-            "3": "三",
-            "4": "四",
-            "5": "五",
-            "urgent": "",
-            "focused": "",
-            "default": ""
+            "active": "",
+            "default": "",
+            "urgent": ""
         }
     },
     "clock": {
@@ -36,14 +41,19 @@
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "on-click": "pavucontrol"
     },
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-ethernet": "{ipaddr}/{cidr} 󰈀",
+        "format-disconnected": "Desconectado 󰤮",
+        "tooltip-format": "{ifname} via {gwaddr} 󰈀"
     },
     "cpu": {
         "format": "{usage}% "
