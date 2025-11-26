@@ -39,57 +39,77 @@ create_symlink() {
     fi
 }
 
-# --- Hyprland ---
-echo -e "\nConfigurando Hyprland..."
+# --- CONFIGURACIÓN (Symlinks) ---
+echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
+
+# Hyprland
 create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
-
-# --- Kitty ---
-echo -e "\nConfigurando Kitty..."
+# Kitty
 create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
-
-# --- Wofi ---
-echo -e "\nConfigurando Wofi..."
+# Wofi
 create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
-
-# --- Waybar ---
-echo -e "\nConfigurando Waybar..."
+# Waybar
 create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
+# GTK 3.0 (Tema oscuro)
+create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
 
-# --- Paquetes y Fuentes ---
+
+# --- INSTALACIÓN DE PAQUETES ---
 install_packages() {
     echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
     if command -v pacman &> /dev/null; then
-        # Lista de paquetes a verificar/instalar
-        PACKAGES=(
-            "ttf-jetbrains-mono-nerd" 
-            "waybar" 
-            "xdg-desktop-portal-hyprland" 
-            "xdg-desktop-portal-gtk"
-            "hyprpaper"
+        
+        # Categorías de paquetes
+        CORE_PKGS=(
+            "hyprland" "kitty" "waybar" "wofi" "hyprpaper" 
+            "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk"
+            "polkit-gnome" # Agente de autenticación ligero
         )
+        
+        FILE_MANAGER_PKGS=(
+            "thunar" "thunar-volman" "thunar-archive-plugin" 
+            "tumbler" "gvfs" "gvfs-mtp" "file-roller"
+        )
+        
+        AUDIO_PKGS=(
+            "pipewire" "pipewire-pulse" "wireplumber" "pavucontrol"
+        )
+        
+        THEME_PKGS=(
+            "gnome-themes-extra" "papirus-icon-theme" 
+            "ttf-jetbrains-mono-nerd" "noto-fonts" "noto-fonts-emoji"
+        )
+        
+        UTILS_PKGS=(
+            "grim" "slurp" "wl-clipboard" "git" "curl"
+        )
+
+        # Unir todas las listas
+        ALL_PACKAGES=("${CORE_PKGS[@]}" "${FILE_MANAGER_PKGS[@]}" "${AUDIO_PKGS[@]}" "${THEME_PKGS[@]}" "${UTILS_PKGS[@]}")
         TO_INSTALL=()
 
-        for pkg in "${PACKAGES[@]}"; do
+        echo -e "${BLUE}Comprobando ${#ALL_PACKAGES[@]} paquetes...${NC}"
+
+        for pkg in "${ALL_PACKAGES[@]}"; do
             if ! pacman -Qi $pkg &> /dev/null; then
                 TO_INSTALL+=("$pkg")
-            else
-                echo -e "${BLUE}$pkg ya está instalado.${NC}"
             fi
         done
 
         if [ ${#TO_INSTALL[@]} -gt 0 ]; then
-            echo -e "${BLUE}Instalando: ${TO_INSTALL[*]}... (requiere sudo)${NC}"
-            sudo pacman -S --noconfirm "${TO_INSTALL[@]}"
-            echo -e "${GREEN}Paquetes instalados.${NC}"
+            echo -e "${BLUE}Instalando paquetes faltantes: ${TO_INSTALL[*]}${NC}"
+            # Usamos sudo para instalar
+            sudo pacman -S --noconfirm --needed "${TO_INSTALL[@]}"
+            echo -e "${GREEN}Instalación de paquetes completada.${NC}"
         else
-            echo -e "${GREEN}Todos los paquetes necesarios están instalados.${NC}"
+            echo -e "${GREEN}Todos los paquetes necesarios ya están instalados.${NC}"
         fi
     else
-        echo -e "${BLUE}No se detectó pacman. Asegúrate de tener instalado: ${PACKAGES[*]}${NC}"
+        echo -e "${BLUE}No se detectó pacman. Debes instalar manualmente los paquetes listados en el script.${NC}"
     fi
 }
 
 install_packages
 
-echo -e "${GREEN}Instalación completada.${NC}"
+echo -e "${GREEN}Configuración completada.${NC}"
