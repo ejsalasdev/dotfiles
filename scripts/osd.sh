@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# Iconos (Nerd Fonts) - Infalibles
-ICON_VOL=" "
-ICON_VOL_MUTE=" "
-ICON_BRI=" "
-ICON_CAPS=" "
+# Iconos
+# Usamos Unicode estándar para evitar problemas de renderizado de Nerd Fonts específicos
+ICON_VOL="🔊"
+ICON_VOL_MUTE="🔇"
+ICON_BRI="🔆"
+ICON_CAPS="Aa" 
 
 # Función para notificar con barra de progreso
 notify_osd() {
@@ -13,7 +14,6 @@ notify_osd() {
     local type=$3
     local stack_tag="osd_${type}"
     
-    # Solo mostramos Icono + Porcentaje
     notify-send -u low -t 1500 \
         -h string:x-dunst-stack-tag:$stack_tag \
         -h int:value:$value \
@@ -57,7 +57,7 @@ case $1 in
 
         pamixer -t
         if pamixer --get-mute | grep -q "true"; then
-            notify_text "Silenciado" "$ICON_VOL_MUTE" "audio"
+            notify_text "SILENCIADO" "$ICON_VOL_MUTE" "audio"
         else
             vol=$(pamixer --get-volume)
             notify_osd "$vol" "$ICON_VOL" "audio"
@@ -78,25 +78,28 @@ case $1 in
         notify_osd "$percent" "$ICON_BRI" "video"
         ;;
     caps_lock)
-        sleep 0.1
-        # Intento 1: Buscar archivo en /sys/class/leds
-        CAPS_FILE=$(find /sys/class/leds -name "*capslock*" | grep "brightness" | head -n 1)
-        
-        # Intento 2: Si falla, buscar input generico (a veces pasa en VMs)
-        if [ -z "$CAPS_FILE" ]; then
-             CAPS_FILE=$(find /sys/class/leds -name "input*::capslock" | grep "brightness" | head -n 1)
-        fi
+        # Intentar leer el estado usando brightnessctl (busca dispositivos tipo 'leds')
+        # El patrón '*::capslock' busca cualquier dispositivo que termine en capslock
+        STATUS=$(brightnessctl --class=leds --device='*::capslock' get 2>/dev/null)
 
-        if [ -n "$CAPS_FILE" ]; then
-            STATUS=$(cat "$CAPS_FILE")
-            if [ "$STATUS" == "1" ]; then
-                notify_text "MAYÚSCULAS: ACTIVO" "$ICON_CAPS" "caps"
-            else
-                notify_text "MAYÚSCULAS: Inactivo" "$ICON_CAPS" "caps"
-            fi
+        if [ "$STATUS" == "1" ]; then
+            notify_text "MAYÚSCULAS: ACTIVO" "$ICON_CAPS" "caps"
+        elif [ "$STATUS" == "0" ]; then
+            notify_text "MAYÚSCULAS: Inactivo" "$ICON_CAPS" "caps"
         else
-            # Fallback si no hay LED accesible
-            notify_text "Bloq Mayús (Sin Estado)" "$ICON_CAPS" "caps"
+            # Si falla brightnessctl, intentamos fallback manual
+            sleep 0.1
+            CAPS_FILE=$(find /sys/class/leds -name "*capslock*" | grep "brightness" | head -n 1)
+            if [ -n "$CAPS_FILE" ]; then
+                 VAL=$(cat "$CAPS_FILE")
+                 if [ "$VAL" == "1" ]; then
+                    notify_text "MAYÚSCULAS: ACTIVO" "$ICON_CAPS" "caps"
+                 else
+                    notify_text "MAYÚSCULAS: Inactivo" "$ICON_CAPS" "caps"
+                 fi
+            else
+                 notify_text "Bloq Mayús (No detectado)" "$ICON_CAPS" "caps"
+            fi
         fi
         ;;
 esac
