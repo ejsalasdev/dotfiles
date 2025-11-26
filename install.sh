@@ -40,6 +40,9 @@ create_symlink() {
 }
 
 # --- CONFIGURACIÓN (Symlinks) ---
+echo -e "\n${BLUE}Creando directorios de usuario...${NC}"
+mkdir -p "$HOME/Imágenes/Capturas de pantalla"
+
 echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
 
 # Hyprland
