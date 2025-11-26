@@ -50,6 +50,8 @@ create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
 create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
 # Waybar
 create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
+# Dunst
+create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
 # GTK 3.0 (Tema oscuro)
 create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
 
@@ -62,7 +64,7 @@ install_packages() {
         
         # Categorías de paquetes
         CORE_PKGS=(
-            "hyprland" "kitty" "waybar" "wofi" "hyprpaper" 
+            "hyprland" "kitty" "waybar" "wofi" "hyprpaper" "dunst" "libnotify" 
             "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk"
             "polkit-gnome" # Agente de autenticación ligero
         )
