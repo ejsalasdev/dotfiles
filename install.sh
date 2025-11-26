@@ -69,7 +69,9 @@ install_packages() {
         
         FILE_MANAGER_PKGS=(
             "thunar" "thunar-volman" "thunar-archive-plugin" 
-            "tumbler" "gvfs" "gvfs-mtp" "file-roller"
+            "tumbler" "ffmpegthumbnailer" "poppler-glib" "imagemagick"
+            "gvfs" "gvfs-mtp" "file-roller"
+            "zip" "unzip" "unrar" "p7zip"
         )
         
         AUDIO_PKGS=(
