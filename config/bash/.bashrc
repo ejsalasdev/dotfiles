@@ -1,20 +1,65 @@
-#
-# ~/.bashrc
-#
+# --- .bashrc ---
 
-# If not running interactively, don't do anything
+# 1. BLE.SH (Debe ser lo primero)
+if [ -f "$HOME/.local/share/blesh/ble.sh" ]; then
+    [[ $- == *i* ]] && source "$HOME/.local/share/blesh/ble.sh" --noattach
+fi
+
+# Si no es interactivo, salir
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+# 2. Historial
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=100000
+HISTFILESIZE=100000
+shopt -s histappend
 
+# 3. Opciones de Bash
+shopt -s checkwinsize
+shopt -s globstar
+shopt -s autocd
+
+# 4. Prompt (Starship)
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
+fi
+
+# 5. Autocompletado
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# 6. FZF
+if command -v fzf &> /dev/null; then
+    eval "$(fzf --bash)"
+fi
+
+# 7. Alias
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias ll="ls -alh"
+alias la="ls -A"
+alias l="ls -CF"
+alias c="clear"
+alias ..="cd .."
+alias ...="cd ../.."
+alias dots="cd ~/dotfiles"
+
+# 8. Colores Man
+export LESS_TERMCAP_mb=$"\e[1;32m"
+export LESS_TERMCAP_md=$"\e[1;32m"
+export LESS_TERMCAP_me=$"\e[0m"
+export LESS_TERMCAP_se=$"\e[0m"
+export LESS_TERMCAP_so=$"\e[01;33m"
+export LESS_TERMCAP_ue=$"\e[0m"
+export LESS_TERMCAP_us=$"\e[1;4;31m"
+
+# 9. NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# --- NVM (Node Version Manager) ---
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+# 10. Adjuntar BLE.SH (Al final)
+[[ ${BLE_VERSION-} ]] && ble-attach
