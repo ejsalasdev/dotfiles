@@ -45,6 +45,8 @@ mkdir -p "$HOME/Imágenes/Capturas de pantalla"
 
 echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
 
+# Bash
+create_symlink "$DOTFILES_DIR/config/bash/.bashrc" "$HOME/.bashrc"
 # Hyprland
 create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
 # Kitty
@@ -59,8 +61,25 @@ create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
 create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
 
 
+
+# --- BLE.SH (Bash Line Editor) ---
+install_blesh() {
+    echo -e "\n${BLUE}Verificando ble.sh (Bash Line Editor)...${NC}"
+    if [ ! -f "$HOME/.local/share/blesh/ble.sh" ]; then
+        echo -e "${BLUE}Instalando ble.sh...${NC}"
+        mkdir -p "$HOME/.local/src"
+        git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git "$HOME/.local/src/ble.sh"
+        make -C "$HOME/.local/src/ble.sh" install PREFIX="$HOME/.local"
+        echo -e "${GREEN}ble.sh instalado.${NC}"
+    else
+        echo -e "${BLUE}ble.sh ya está instalado.${NC}"
+    fi
+}
+
 # --- INSTALACIÓN DE PAQUETES ---
-install_packages() {
+install_packages
+
+install_blesh() {
     echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
     if command -v pacman &> /dev/null; then
@@ -89,7 +108,7 @@ install_packages() {
         )
         
         UTILS_PKGS=(
-            "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
+            "grim" "slurp" "wl-clipboard" "git" "curl" "starship" "bash-completion" "fzf" "bc" "make" "man-db" "brightnessctl"
         )
 
         # Unir todas las listas
@@ -118,5 +137,7 @@ install_packages() {
 }
 
 install_packages
+
+install_blesh
 
 echo -e "${GREEN}Configuración completada.${NC}"
