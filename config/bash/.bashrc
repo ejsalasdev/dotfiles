@@ -36,16 +36,16 @@ if command -v fzf &> /dev/null; then
     eval "$(fzf --bash)"
 fi
 
-# 7. Alias
-alias ls="ls --color=auto"
-alias grep="grep --color=auto"
-alias ll="ls -alh"
-alias la="ls -A"
-alias l="ls -CF"
-alias c="clear"
-alias ..="cd .."
-alias ...="cd ../.."
-alias dots="cd ~/dotfiles"
+# 7. Configuración Modular
+# Cargar Alias
+if [ -f "$HOME/dotfiles/config/bash/aliases.bash" ]; then
+    source "$HOME/dotfiles/config/bash/aliases.bash"
+fi
+
+# Cargar Secretos (No en Git)
+if [ -f "$HOME/.bash_secrets" ]; then
+    source "$HOME/.bash_secrets"
+fi
 
 # 8. Colores Man
 export LESS_TERMCAP_mb=$"\e[1;32m"

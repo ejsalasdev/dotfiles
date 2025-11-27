@@ -10,7 +10,8 @@ echo -e "${BLUE}Iniciando configuración de Dotfiles...${NC}"
 # Directorio base de los dotfiles (donde está este script)
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-# Función para crear enlaces simbólicos
+# --- FUNCIONES ---
+
 create_symlink() {
     local source=$1
     local target=$2
@@ -19,7 +20,6 @@ create_symlink() {
     mkdir -p "$(dirname "$target")"
 
     if [ -L "$target" ]; then
-        # Es un enlace, verificamos si apunta a donde debe
         local current_target=$(readlink "$target")
         if [ "$current_target" == "$source" ]; then
              echo -e "${BLUE}Enlace correcto existente: $target${NC}"
@@ -39,36 +39,17 @@ create_symlink() {
     fi
 }
 
-# --- CONFIGURACIÓN (Symlinks) ---
-echo -e "\n${BLUE}Creando directorios de usuario...${NC}"
-mkdir -p "$HOME/Imágenes/Capturas de pantalla"
-
-echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
-
-# Bash
-create_symlink "$DOTFILES_DIR/config/bash/.bashrc" "$HOME/.bashrc"
-# Hyprland
-create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
-# Kitty
-create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
-# Wofi
-create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
-# Waybar
-create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
-# Dunst
-create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
-# GTK 3.0 (Tema oscuro)
-create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
-
-
-
-# --- BLE.SH (Bash Line Editor) ---
 install_blesh() {
     echo -e "\n${BLUE}Verificando ble.sh (Bash Line Editor)...${NC}"
     if [ ! -f "$HOME/.local/share/blesh/ble.sh" ]; then
         echo -e "${BLUE}Instalando ble.sh...${NC}"
         mkdir -p "$HOME/.local/src"
+        # Clonar repositorio
+        if [ -d "$HOME/.local/src/ble.sh" ]; then
+            rm -rf "$HOME/.local/src/ble.sh"
+        fi
         git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git "$HOME/.local/src/ble.sh"
+        # Compilar e instalar
         make -C "$HOME/.local/src/ble.sh" install PREFIX="$HOME/.local"
         echo -e "${GREEN}ble.sh instalado.${NC}"
     else
@@ -76,25 +57,21 @@ install_blesh() {
     fi
 }
 
-# --- INSTALACIÓN DE PAQUETES ---
-install_packages
-
-install_blesh() {
+install_packages() {
     echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
     if command -v pacman &> /dev/null; then
         
-        # Categorías de paquetes
         CORE_PKGS=(
             "hyprland" "kitty" "waybar" "wofi" "hyprpaper" "dunst" "libnotify" 
-            "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk"
-            "polkit-gnome" "hyprlock" "hypridle" "hyprpicker" # Agente de autenticación ligero
+            "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" 
+            "polkit-gnome" "hyprlock" "hypridle" "hyprpicker"
         )
         
         FILE_MANAGER_PKGS=(
             "thunar" "thunar-volman" "thunar-archive-plugin" 
-            "tumbler" "ffmpegthumbnailer" "poppler-glib" "imagemagick"
-            "gvfs" "gvfs-mtp" "file-roller"
+            "tumbler" "ffmpegthumbnailer" "poppler-glib" "imagemagick" 
+            "gvfs" "gvfs-mtp" "file-roller" 
             "zip" "unzip" "unrar" "p7zip"
         )
         
@@ -108,10 +85,10 @@ install_blesh() {
         )
         
         UTILS_PKGS=(
-            "grim" "slurp" "wl-clipboard" "git" "curl" "starship" "bash-completion" "fzf" "bc" "make" "man-db" "brightnessctl"
+            "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
+            "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db"
         )
 
-        # Unir todas las listas
         ALL_PACKAGES=("${CORE_PKGS[@]}" "${FILE_MANAGER_PKGS[@]}" "${AUDIO_PKGS[@]}" "${THEME_PKGS[@]}" "${UTILS_PKGS[@]}")
         TO_INSTALL=()
 
@@ -125,19 +102,36 @@ install_blesh() {
 
         if [ ${#TO_INSTALL[@]} -gt 0 ]; then
             echo -e "${BLUE}Instalando paquetes faltantes: ${TO_INSTALL[*]}${NC}"
-            # Usamos sudo para instalar
             sudo pacman -S --noconfirm --needed "${TO_INSTALL[@]}"
             echo -e "${GREEN}Instalación de paquetes completada.${NC}"
         else
             echo -e "${GREEN}Todos los paquetes necesarios ya están instalados.${NC}"
         fi
     else
-        echo -e "${BLUE}No se detectó pacman. Debes instalar manualmente los paquetes listados en el script.${NC}"
+        echo -e "${BLUE}No se detectó pacman. Instalación manual requerida.${NC}"
     fi
 }
 
+# --- EJECUCIÓN ---
+
+# 1. Crear directorios
+echo -e "\n${BLUE}Creando directorios de usuario...${NC}"
+mkdir -p "$HOME/Imágenes/Capturas de pantalla"
+
+# 2. Crear enlaces simbólicos
+echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
+create_symlink "$DOTFILES_DIR/config/bash/.bashrc" "$HOME/.bashrc"
+create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
+create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
+create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
+create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
+create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
+create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
+
+# 3. Instalar paquetes del sistema
 install_packages
 
+# 4. Instalar herramientas locales (Ble.sh)
 install_blesh
 
-echo -e "${GREEN}Configuración completada.${NC}"
+echo -e "\n${GREEN}Configuración completada exitosamente.${NC}"
