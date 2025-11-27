@@ -1,0 +1,15 @@
+# General
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+*~
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets (Safety net)
+.bash_secrets
+*.env
