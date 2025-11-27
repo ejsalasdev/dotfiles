@@ -83,12 +83,19 @@ install_packages() {
         )
         
         UTILS_PKGS=(
-            "neovim" "ripgrep" "fd" "lazygit"
             "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
             "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db"
         )
 
-        ALL_PACKAGES=("${CORE_PKGS[@]}" "${FILE_MANAGER_PKGS[@]}" "${AUDIO_PKGS[@]}" "${THEME_PKGS[@]}" "${UTILS_PKGS[@]}")
+        APPS_PKGS=(
+            "firefox" "firefox-i18n-es-es"
+            "vlc"
+            "feh"
+            "cups" "cups-pdf" "cups-filters" "gutenprint"
+            "libreoffice-still" "libreoffice-still-es"
+        )
+
+        ALL_PACKAGES=("${CORE_PKGS[@]}" "${FILE_MANAGER_PKGS[@]}" "${AUDIO_PKGS[@]}" "${THEME_PKGS[@]}" "${UTILS_PKGS[@]}" "${APPS_PKGS[@]}")
         TO_INSTALL=()
 
         echo -e "${BLUE}Comprobando ${#ALL_PACKAGES[@]} paquetes...${NC}"
