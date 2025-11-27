@@ -57,7 +57,7 @@ El objetivo de este proyecto es proporcionar un entorno de trabajo fluido, esté
 | `SUPER + E` | Gestor de Archivos (Thunar) |
 | `SUPER + SHIFT + R` | Recargar configuración (Hyprland/Waybar) |
 | `SUPER + M` | Salir de la sesión |
-| `SUPER + L` | Bloquear pantalla (Swaylock) |
+| `SUPER + L` | Bloquear pantalla (Hyprlock) |
 | `SUPER + Arrow Keys` | Redimensionar ventana activa |
 | `SUPER + SHIFT + Arrow Keys` | Mover foco entre ventanas |
 | `SUPER + SHIFT + Left/Right` | Mover ventana a workspace |
