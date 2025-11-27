@@ -9,7 +9,8 @@ alias un="sudo pacman -Rns"
 alias up="sudo pacman -Syu"
 alias se="pacman -Ss"
 alias unlock="sudo rm /var/lib/pacman/db.lck"
-alias cleanup="sudo pacman -Rns $(pacman -Qtdq)"
+alias cu="sudo pacman -Rns $(pacman -Qtdq)" # Limpiar huerfanos (CleanUp)
+alias cc="sudo pacman -Sc" # Limpiar Cache (CleanCache)
 
 # --- Utilidades ---
 alias cat="bat"
