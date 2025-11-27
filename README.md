@@ -63,6 +63,7 @@ El objetivo de este proyecto es proporcionar un entorno de trabajo fluido, esté
 | `SUPER + SHIFT + Left/Right` | Mover ventana a workspace |
 | `PRINT` | Captura de pantalla completa (al portapapeles) |
 | `SUPER + PRINT` | Captura de región (al portapapeles) |
+| `SUPER + SHIFT + C` | Selector de color (Hyprpicker) |
 | `Teclas Multimedia` | Control de Volumen y Brillo (con OSD) |
 
 ## 📂 Estructura del Proyecto
