@@ -88,7 +88,7 @@ install_packages() {
         )
 
         APPS_PKGS=(
-            "firefox" "firefox-i18n-es-es"
+            "firefox" "firefox-i18n-es-mx"
             "vlc"
             "feh"
             "cups" "cups-pdf" "cups-filters" "gutenprint"
