@@ -44,12 +44,10 @@ install_blesh() {
     if [ ! -f "$HOME/.local/share/blesh/ble.sh" ]; then
         echo -e "${BLUE}Instalando ble.sh...${NC}"
         mkdir -p "$HOME/.local/src"
-        # Clonar repositorio
         if [ -d "$HOME/.local/src/ble.sh" ]; then
             rm -rf "$HOME/.local/src/ble.sh"
         fi
         git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git "$HOME/.local/src/ble.sh"
-        # Compilar e instalar
         make -C "$HOME/.local/src/ble.sh" install PREFIX="$HOME/.local"
         echo -e "${GREEN}ble.sh instalado.${NC}"
     else
@@ -85,6 +83,7 @@ install_packages() {
         )
         
         UTILS_PKGS=(
+            "neovim" "ripgrep" "fd" "lazygit"
             "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
             "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db"
         )
@@ -127,6 +126,7 @@ create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
 create_symlink "$DOTFILES_DIR/config/waybar" "$HOME/.config/waybar"
 create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
 create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
+create_symlink "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 
 # 3. Instalar paquetes del sistema
 install_packages
