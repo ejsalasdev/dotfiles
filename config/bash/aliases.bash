@@ -8,10 +8,8 @@ alias in='sudo pacman -S'
 alias un='sudo pacman -Rns'
 alias up='sudo pacman -Syu'
 alias se='pacman -Ss'
-alias unlock='sudo rm /var/lib/pacman/db.lck'
 alias cu='sudo pacman -Rns $(pacman -Qtdq)'
 alias cc='sudo pacman -Sc'
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 
 # --- Utilidades ---
 alias cat='bat'
