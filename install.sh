@@ -127,6 +127,7 @@ mkdir -p "$HOME/Imágenes/Capturas de pantalla"
 # 2. Crear enlaces simbólicos
 echo -e "\n${BLUE}Creando enlaces simbólicos...${NC}"
 create_symlink "$DOTFILES_DIR/config/bash/.bashrc" "$HOME/.bashrc"
+create_symlink "$DOTFILES_DIR/config/bash/blerc" "$HOME/.blerc"
 create_symlink "$DOTFILES_DIR/config/hypr" "$HOME/.config/hypr"
 create_symlink "$DOTFILES_DIR/config/kitty" "$HOME/.config/kitty"
 create_symlink "$DOTFILES_DIR/config/wofi" "$HOME/.config/wofi"
