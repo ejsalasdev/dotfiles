@@ -1,29 +1,25 @@
 # --- Estilo Zsh-Syntax-Highlighting ---
 
-# Comandos: Verde si existe, Rojo si no
-ble-face -s command_builtin=fg=green
-ble-face -s command_alias=fg=green
-ble-face -s command_function=fg=green
-ble-face -s command_file=fg=green
-ble-face -s command_keyword=fg=green
-ble-face -s command_jobs=fg=green
+# Comandos
+ble-face command_builtin=fg=green
+ble-face command_alias=fg=green
+ble-face command_function=fg=green
+ble-face command_file=fg=green
+ble-face command_keyword=fg=green
+ble-face command_jobs=fg=green
 
 # Errores
-ble-face -s syntax_error=fg=red,underline
-ble-face -s command_directory=fg=blue,underline
+ble-face syntax_error=fg=red,underline
+ble-face command_directory=fg=blue,underline
 
 # Argumentos y Strings
-ble-face -s syntax_quoted=fg=yellow
-ble-face -s syntax_glob=fg=magenta
-ble-face -s argument_option=fg=cyan
+ble-face syntax_quoted=fg=yellow
+ble-face syntax_glob=fg=magenta
+ble-face argument_option=fg=cyan
 
 # --- Autocompletado (Sugerencias) ---
-# fg=242 es gris, bg=none QUITA el fondo feo (estilo zsh-autosuggestions)
-ble-face -s auto_complete=fg=242,bg=none
+# fg=242 es gris, bg=none QUITA el fondo feo
+ble-face auto_complete=fg=242,bg=none
 
 # --- Selección de Menú ---
-ble-face -s menu_filter_input=fg=black,bg=yellow
-
-# --- Rendimiento ---
-# Si el comando es muy largo, deja de resaltar para no laggear
-bleopt syntax_highlight_limit=1000
+ble-face menu_filter_input=fg=black,bg=yellow
