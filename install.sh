@@ -85,6 +85,7 @@ install_packages() {
         UTILS_PKGS=(
             "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
             "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db"
+	    "ntfs-3g"
         )
 
         APPS_PKGS=(
