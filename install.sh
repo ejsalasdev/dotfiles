@@ -96,26 +96,35 @@ install_packages() {
             "libreoffice-still" "libreoffice-still-es"
         )
 
-        ALL_PACKAGES=("${CORE_PKGS[@]}" "${FILE_MANAGER_PKGS[@]}" "${AUDIO_PKGS[@]}" "${THEME_PKGS[@]}" "${UTILS_PKGS[@]}" "${APPS_PKGS[@]}")
+        ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{AUDIO_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")
         TO_INSTALL=()
 
-        echo -e "${BLUE}Comprobando ${#ALL_PACKAGES[@]} paquetes...${NC}"
+        echo -e "${BLUE}Comprobando ${{#ALL_PACKAGES[@]}} paquetes...${NC}"
 
-        for pkg in "${ALL_PACKAGES[@]}"; do
+        for pkg in "${{ALL_PACKAGES[@]}}"; do
             if ! pacman -Qi $pkg &> /dev/null; then
                 TO_INSTALL+=("$pkg")
             fi
         done
 
-        if [ ${#TO_INSTALL[@]} -gt 0 ]; then
-            echo -e "${BLUE}Instalando paquetes faltantes: ${TO_INSTALL[*]}${NC}"
-            sudo pacman -S --noconfirm --needed "${TO_INSTALL[@]}"
+        if [ ${{#TO_INSTALL[@]}} -gt 0 ]; then
+            echo -e "${BLUE}Instalando paquetes faltantes: ${{TO_INSTALL[*]}}${NC}"
+            sudo pacman -S --noconfirm --needed "${{TO_INSTALL[@]}}"
             echo -e "${GREEN}Instalación de paquetes completada.${NC}"
         else
             echo -e "${GREEN}Todos los paquetes necesarios ya están instalados.${NC}"
         fi
     else
         echo -e "${BLUE}No se detectó pacman. Instalación manual requerida.${NC}"
+    fi
+}
+
+enable_services() {
+    echo -e "\n${BLUE}Habilitando servicios del sistema...${NC}"
+    if command -v systemctl &> /dev/null; then
+        echo -e "${BLUE}Habilitando CUPS...${NC}"
+        sudo systemctl enable cups.service
+        echo -e "${GREEN}Servicio CUPS habilitado.${NC}"
     fi
 }
 
@@ -142,5 +151,8 @@ install_packages
 
 # 4. Instalar herramientas locales (Ble.sh)
 install_blesh
+
+# 5. Habilitar servicios
+enable_services
 
 echo -e "\n${GREEN}Configuración completada exitosamente.${NC}"
