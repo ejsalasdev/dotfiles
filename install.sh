@@ -84,7 +84,7 @@ install_packages() {
         
         UTILS_PKGS=(
             "grim" "slurp" "wl-clipboard" "git" "curl" "brightnessctl"
-            "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db"
+            "starship" "bash-completion" "fzf" "eza" "bat" "bc" "make" "man-db" "sane-airscan"
 	    "ntfs-3g"
         )
 
@@ -92,7 +92,7 @@ install_packages() {
             "firefox" "firefox-i18n-es-mx"
             "vlc"
             "feh"
-            "cups" "cups-pdf" "cups-filters" "gutenprint"
+            "cups" "cups-pdf" "cups-filters" "gutenprint" "simple-scan"
             "libreoffice-still" "libreoffice-still-es"
         )
 
