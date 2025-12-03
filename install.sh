@@ -93,7 +93,7 @@ install_packages() {
             "vlc"
             "feh"
             "cups" "cups-pdf" "cups-filters" "gutenprint" "simple-scan"
-            "libreoffice-still" "libreoffice-still-es"
+            "libreoffice-still" "libreoffice-still-es" "bluetui"
         )
 
         ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{AUDIO_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")
