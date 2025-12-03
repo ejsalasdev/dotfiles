@@ -8,3 +8,13 @@ if [ -n "$BASH_VERSION" ]; then
         . "$HOME/.bashrc"
     fi
 fi
+
+
+# Start ssh-agent if it is not running and load keys
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -s > ~/.ssh/ssh-agent-env
+fi
+
+if [[ -f ~/.ssh/ssh-agent-env ]]; then
+    . ~/.ssh/ssh-agent-env > /dev/null
+fi
