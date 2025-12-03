@@ -49,7 +49,7 @@
                 ""
             ]
         },
-        "on-click": "kitty --class pavucontrol -e pavucontrol"
+        "on-click": "pavucontrol"
     },
     "bluetooth": {
         "format": " {status}",
