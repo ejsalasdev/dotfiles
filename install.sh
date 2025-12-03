@@ -91,7 +91,7 @@ install_packages() {
         APPS_PKGS=(
             "firefox" "firefox-i18n-es-mx"
             "vlc"
-            "feh"
+            "imv"
             "cups" "cups-pdf" "cups-filters" "gutenprint" "simple-scan"
             "libreoffice-still" "libreoffice-still-es" "bluetui"
         )
