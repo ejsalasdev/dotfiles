@@ -18,6 +18,7 @@
         "network",
         "cpu",
         "memory",
+        "battery",
         "tray"
     ],
     "hyprland/workspaces": {
@@ -60,6 +61,18 @@
     },
     "memory": {
         "format": "{}% "
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
     },
     "tray": {
         "icon-size": 21,

@@ -29,7 +29,7 @@ window#waybar {
     color: #33ccff;
 }
 
-#clock, #network, #pulseaudio, #cpu, #memory, #tray {
+#clock, #network, #pulseaudio, #cpu, #memory, #battery, #tray {
     padding: 0 10px;
     color: #cdd6f4;
     background-color: #1e1e2e;
@@ -40,6 +40,18 @@ window#waybar {
 #clock {
     color: #33ccff;
     font-weight: bold;
+}
+
+#battery { color: #a6e3a1; }
+#battery.charging { color: #a6e3a1; }
+#battery.warning:not(.charging) { color: #fab387; }
+#battery.critical:not(.charging) { color: #f38ba8; animation-name: blink; animation-duration: 0.5s; animation-timing-function: linear; animation-iteration-count: infinite; animation-direction: alternate; }
+
+@keyframes blink {
+    to {
+        background-color: #f38ba8;
+        color: #1e1e2e;
+    }
 }
 
 #network { color: #89b4fa; }
