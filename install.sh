@@ -64,6 +64,7 @@ install_packages() {
             "hyprland" "kitty" "waybar" "wofi" "hyprpaper" "dunst" "libnotify" 
             "xdg-desktop-portal-hyprland" "xdg-desktop-portal-gtk" 
             "polkit-gnome" "hyprlock" "hypridle" "hyprpicker"
+            "sddm"
         )
         
         FILE_MANAGER_PKGS=(
@@ -126,6 +127,10 @@ enable_services() {
         echo -e "${BLUE}Habilitando CUPS...${NC}"
         sudo systemctl enable cups.service
         echo -e "${GREEN}Servicio CUPS habilitado.${NC}"
+
+        echo -e "${BLUE}Habilitando SDDM...${NC}"
+        sudo systemctl enable sddm
+        echo -e "${GREEN}Servicio SDDM habilitado.${NC}"
     fi
 }
 
