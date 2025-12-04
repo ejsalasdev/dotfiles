@@ -58,7 +58,7 @@
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "kitty --class bluetui -e bluetui"
+        "on-click": "kitty --class bluetui -e sh -c \"rfkill unblock bluetooth && bluetui\""
     },
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
