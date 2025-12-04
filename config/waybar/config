@@ -38,7 +38,7 @@
     },
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format-muted": " {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -71,12 +71,12 @@
         "format": "{usage}% "
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}% "
     },
     "battery": {
         "states": {
-            "good": 95,
-            "warning": 30,
+            "good": 90,
+            "warning": 25,
             "critical": 15
         },
         "format": "{capacity}% {icon}",
