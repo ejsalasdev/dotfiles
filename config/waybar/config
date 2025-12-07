@@ -53,8 +53,8 @@
         "on-click": "xdg-open https://wttr.in"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{icon}",
+        "format-muted": "",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -65,22 +65,27 @@
                 ""
             ]
         },
+        "tooltip-format": "{desc}: {volume}%",
         "on-click": "pavucontrol"
     },
     "bluetooth": {
-        "format": " {status}",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "format": "",
+        "format-disabled": "󰂲",
+        "format-off": "󰂲",
+        "format-on": "",
+        "format-connected": "󰂱",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "kitty --class bluetui -e sh -c \"rfkill unblock bluetooth && bluetui\""
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} 󰈀",
-        "format-disconnected": "Desconectado 󰤮",
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤮",
         "tooltip-format": "{ifname} via {gwaddr} 󰈀",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) \n{ipaddr}",
+        "tooltip-format-ethernet": "{ipaddr}/{cidr}",
         "on-click": "kitty --class nmtui -e nmtui"
     },
     "cpu": {

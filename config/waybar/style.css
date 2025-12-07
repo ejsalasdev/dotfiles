@@ -46,6 +46,14 @@ window#waybar {
     color: #89dceb; /* Sky - Catppuccin */
 }
 
+#bluetooth.off, #bluetooth.disabled {
+    color: #fab387; /* Peach/Orange */
+}
+
+#bluetooth.connected {
+    color: #89b4fa; /* Blue */
+}
+
 #custom-updates.updates {
     color: #f5c2e7; /* Rosewater - Catppuccin */
     font-weight: bold;
