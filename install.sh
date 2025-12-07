@@ -116,7 +116,7 @@ install_packages() {
             "viewnior"
             "cups" "cups-pdf" "cups-filters" "gutenprint" "simple-scan"
             "libreoffice-still" "libreoffice-still-es" "bluetui"
-            "hyprsunset"
+            "hyprsunset" "gsimplecal"
         )
 
         ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{AUDIO_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")

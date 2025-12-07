@@ -42,7 +42,8 @@
     },
     "clock": {
         "format": "{:%H:%M}  ",
-        "format-alt": "{:%A, %B %d, %Y} "
+        "format-alt": "{:%A, %B %d, %Y} ",
+        "on-click": "gsimplecal"
     },
     "pulseaudio": {
         "format": "{icon}",
