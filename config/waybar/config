@@ -7,16 +7,16 @@
     "margin-left": 10,
     "margin-right": 10,
     "modules-left": [
+        "custom/updates",
         "hyprland/workspaces",
         "hyprland/window"
     ],
     "modules-center": [
-        "clock",
-        "custom/weather"
+        "clock"
     ],
     "modules-right": [
+        "custom/weather",
         "pulseaudio",
-        "custom/updates",
         "bluetooth",
         "network",
         "cpu",
@@ -31,6 +31,13 @@
         "interval": 3600,
         "on-click": "kitty -e yay -Syu"
     },
+    "custom/weather": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/dotfiles/scripts/weather.sh",
+        "interval": 3600,
+        "on-click": "xdg-open https://wttr.in"
+    },
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -43,7 +50,7 @@
     },
     "clock": {
         "format": "{:%H:%M}  ",
-        "format-alt": "{:%A, %B %d, %Y}  "
+        "format-alt": "{:%A, %B %d, %Y} "
     },
     "custom/weather": {
         "format": "{}",
