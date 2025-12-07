@@ -55,6 +55,27 @@ install_blesh() {
     fi
 }
 
+install_yay() {
+    echo -e "\n${BLUE}Verificando yay (AUR Helper)...${NC}"
+    if ! command -v yay &> /dev/null; then
+        echo -e "${BLUE}Instalando yay...${NC}"
+        sudo pacman -S --needed --noconfirm git base-devel
+        
+        TEMP_DIR=$(mktemp -d)
+        git clone https://aur.archlinux.org/yay.git "$TEMP_DIR/yay"
+        
+        current_dir=$(pwd)
+        cd "$TEMP_DIR/yay"
+        makepkg -si --noconfirm
+        cd "$current_dir"
+        
+        rm -rf "$TEMP_DIR"
+        echo -e "${GREEN}yay instalado.${NC}"
+    else
+        echo -e "${GREEN}yay ya está instalado.${NC}"
+    fi
+}
+
 install_packages() {
     echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
@@ -152,13 +173,16 @@ create_symlink "$DOTFILES_DIR/config/dunst" "$HOME/.config/dunst"
 create_symlink "$DOTFILES_DIR/config/gtk-3.0" "$HOME/.config/gtk-3.0"
 create_symlink "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 
-# 3. Instalar paquetes del sistema
+# 3. Instalar AUR Helper (yay)
+install_yay
+
+# 4. Instalar paquetes del sistema
 install_packages
 
-# 4. Instalar herramientas locales (Ble.sh)
+# 5. Instalar herramientas locales (Ble.sh)
 install_blesh
 
-# 5. Habilitar servicios
+# 6. Habilitar servicios
 enable_services
 
 echo -e "\n${GREEN}Configuración completada exitosamente.${NC}"
