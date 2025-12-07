@@ -90,7 +90,8 @@
         "states": {
             "good": 90,
             "warning": 25,
-            "critical": 15
+            "critical": 15,
+            "full": 99
         },
         "format": "{capacity}% {icon}",
         "format-charging": "{capacity}% ",
