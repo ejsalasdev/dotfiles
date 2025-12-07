@@ -155,6 +155,18 @@ enable_services() {
     fi
 }
 
+configure_sddm_theme() {
+    echo -e "\n${BLUE}Configurando tema de SDDM...${NC}"
+    # Crear o modificar /etc/sddm.conf para establecer el tema
+    # Usamos sed para ser idempotente y evitar crear múltiples secciones [Theme]
+    if grep -q "^\\[Theme\\]" /etc/sddm.conf 2> /dev/null; then
+        sudo sed -i '/^\\[Theme\\]/!b;n;cCurrent=catppuccin-mocha-lavender' /etc/sddm.conf
+    else
+        echo -e "[Theme]\nCurrent=catppuccin-mocha-lavender" | sudo tee -a /etc/sddm.conf
+    fi
+    echo -e "${GREEN}Tema de SDDM configurado.${NC}"
+}
+
 # --- EJECUCIÓN ---
 
 # 1. Crear directorios
@@ -184,5 +196,8 @@ install_blesh
 
 # 6. Habilitar servicios
 enable_services
+
+# 7. Configurar tema de SDDM
+configure_sddm_theme
 
 echo -e "\n${GREEN}Configuración completada exitosamente.${NC}"
