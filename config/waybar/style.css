@@ -29,7 +29,7 @@ window#waybar {
     color: #33ccff;
 }
 
-#clock, #network, #pulseaudio, #cpu, #memory, #battery, #bluetooth, #tray {
+#clock, #network, #pulseaudio, #cpu, #memory, #battery, #bluetooth, #custom-updates, #tray {
     padding: 0 10px;
     color: #cdd6f4;
     background-color: #1e1e2e;
@@ -39,6 +39,11 @@ window#waybar {
 
 #clock {
     color: #33ccff;
+    font-weight: bold;
+}
+
+#custom-updates.updates {
+    color: #f5c2e7; /* Rosewater - Catppuccin */
     font-weight: bold;
 }
 

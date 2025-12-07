@@ -15,6 +15,7 @@
     ],
     "modules-right": [
         "pulseaudio",
+        "custom/updates",
         "bluetooth",
         "network",
         "cpu",
@@ -22,6 +23,13 @@
         "battery",
         "tray"
     ],
+    "custom/updates": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/dotfiles/scripts/check_updates.sh",
+        "interval": 3600,
+        "on-click": "kitty -e yay -Syu"
+    },
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
