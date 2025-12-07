@@ -43,7 +43,7 @@
     "clock": {
         "format": "{:%H:%M}  ",
         "format-alt": "{:%A, %B %d, %Y} ",
-        "on-click": "gsimplecal"
+        "on-click": "~/dotfiles/scripts/toggle_gsimplecal.sh"
     },
     "pulseaudio": {
         "format": "{icon}",
