@@ -11,7 +11,8 @@
         "hyprland/window"
     ],
     "modules-center": [
-        "clock"
+        "clock",
+        "custom/weather"
     ],
     "modules-right": [
         "pulseaudio",
@@ -43,6 +44,13 @@
     "clock": {
         "format": "{:%H:%M}  ",
         "format-alt": "{:%A, %B %d, %Y}  "
+    },
+    "custom/weather": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/dotfiles/scripts/weather.sh",
+        "interval": 3600,
+        "on-click": "xdg-open https://wttr.in"
     },
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
