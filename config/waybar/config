@@ -73,7 +73,7 @@
         "on-click": "kitty --class bluetui -e sh -c \"rfkill unblock bluetooth && bluetui\""
     },
     "network": {
-        "format-wifi": "{icon}",
+        "format-wifi": "",
         "format-ethernet": "󰈀",
         "format-disconnected": "󰤮",
         "tooltip-format": "{ifname} via {gwaddr} 󰈀",
