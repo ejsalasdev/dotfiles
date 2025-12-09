@@ -79,6 +79,11 @@
         "tooltip-format": "{ifname} via {gwaddr} 󰈀",
         "tooltip-format-wifi": "{essid} ({signalStrength}%) \n{ipaddr}",
         "tooltip-format-ethernet": "{ipaddr}/{cidr}",
+        "format-icons": {
+            "wifi": ["", "", "", "", ""],
+            "ethernet": "󰈀",
+            "disconnected": "󰤮"
+        },
         "on-click": "kitty --class nmtui -e nmtui"
     },
     "cpu": {
