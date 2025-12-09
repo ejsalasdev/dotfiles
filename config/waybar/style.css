@@ -77,7 +77,6 @@ window#waybar {
 #bluetooth { color: #89b4fa; }
 #network { 
     color: #89b4fa;
-    text-align: center;
 }
 #cpu { color: #fab387; }
 #memory { color: #f9e2af; }
