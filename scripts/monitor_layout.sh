@@ -42,6 +42,9 @@ elif [ "$CONNECTED_MONITORS" -eq 2 ]; then
     for i in {6..10}; do
         hyprctl keyword workspace "$i, monitor:$MAIN_MONITOR"
     done
+
+    # Después de configurar, enfocar el monitor externo para que muestre su W1
+    hyprctl dispatch focusmonitor "$EXTERNAL_MONITOR"
 fi
 
 # Recargar Waybar para que se adapte al nuevo layout de monitores
