@@ -1,55 +1,53 @@
 #!/bin/bash
 
-# Reiniciar todas las configuraciones de monitor
-# Opcional: Deshabilitar todos los monitores para un lienzo limpio y evitar conflictos
-# hyprctl output disable "*"
-# sleep 0.1 # Dar un respiro a Hyprland
+# --- CONFIGURACIÓN ---
+MAIN_MONITOR="eDP-1"       # Laptop
+EXTERNAL_MONITOR="HDMI-A-1" # Externo
 
+# Función para mover workspaces a un monitor específico
+move_workspaces() {
+    local monitor=$1
+    local start=$2
+    local end=$3
+
+    for ((i=start; i<=end; i++)); do
+        # 1. Asignar la regla para el futuro
+        hyprctl keyword workspace "$i, monitor:$monitor"
+        # 2. Mover forzosamente el workspace si ya existe (corrige el problema del WS 1)
+        hyprctl dispatch moveworkspacetomonitor "$i $monitor"
+    done
+}
+
+# --- DETECCIÓN ---
 # Contar monitores conectados
 CONNECTED_MONITORS=$(hyprctl monitors -j | jq '. | length')
-MAIN_MONITOR="eDP-1" # Monitor de la laptop (integrado)
-EXTERNAL_MONITOR="HDMI-A-1" # Monitor externo
 
-# === Configuración de un solo monitor (Solo Laptop) ===
 if [ "$CONNECTED_MONITORS" -eq 1 ]; then
-    echo "Detectado un solo monitor: $MAIN_MONITOR"
-    # Configurar el monitor principal (laptop) a 0x0
+    echo "--- Modo Laptop (1 Monitor) ---"
+    # Configurar monitor
     hyprctl keyword monitor "$MAIN_MONITOR, preferred, 0x0, 1"
     
-    # Asegurarse de que el monitor externo no tenga una configuración residual
-    hyprctl keyword monitor "$EXTERNAL_MONITOR, disable" # Deshabilitar explícitamente el externo
+    # Mover TODOS los workspaces (1-10) a la laptop
+    move_workspaces "$MAIN_MONITOR" 1 10
 
-    # Asignar todos los workspaces al monitor principal (eDP-1)
-    for i in {1..10}; do
-        hyprctl keyword workspace "$i, monitor:$MAIN_MONITOR"
-    done
-
-# === Configuración de doble monitor ===
-elif [ "$CONNECTED_MONITORS" -eq 2 ]; then
-    echo "Detectados dos monitores: $EXTERNAL_MONITOR (externo) y $MAIN_MONITOR (laptop)"
-    
-    # Configurar monitor externo (izquierda, primario)
+elif [ "$CONNECTED_MONITORS" -ge 2 ]; then
+    echo "--- Modo Escritorio (2+ Monitores) ---"
+    # Configurar posiciones
     hyprctl keyword monitor "$EXTERNAL_MONITOR, preferred, 0x0, 1"
-    # Configurar monitor principal (derecha del externo)
     hyprctl keyword monitor "$MAIN_MONITOR, preferred, 1920x0, 1"
 
-    # Asignar workspaces
-    # HDMI-A-1 (Externo): Workspaces 1-5
-    for i in {1..5}; do
-        hyprctl keyword workspace "$i, monitor:$EXTERNAL_MONITOR"
-    done
-    # eDP-1 (Laptop): Workspaces 6-10
-    for i in {6..10}; do
-        hyprctl keyword workspace "$i, monitor:$MAIN_MONITOR"
-    done
-
-    # Después de configurar, enfocar el monitor externo para que muestre su W1
+    # Mover Workspaces 1-5 al Externo (¡Forzando el movimiento!)
+    move_workspaces "$EXTERNAL_MONITOR" 1 5
+    
+    # Mover Workspaces 6-10 a la Laptop
+    move_workspaces "$MAIN_MONITOR" 6 10
+    
+    # Enfocar el workspace 1 en el monitor principal para empezar bien
     hyprctl dispatch focusmonitor "$EXTERNAL_MONITOR"
+    hyprctl dispatch workspace 1
 fi
 
-# Recargar Waybar para que se adapte al nuevo layout de monitores
-# Usamos un pequeño delay para asegurar que Hyprland haya aplicado los cambios
-sleep 0.5
+# Recargar Waybar para actualizar módulos
+sleep 1
 killall waybar && waybar &
-
-echo "Configuración de monitores aplicada."
+echo "Layout aplicado correctamente."
