@@ -76,6 +76,36 @@ install_yay() {
     fi
 }
 
+install_sdkman() {
+    echo -e "\n${BLUE}Verificando SDKMAN!...${NC}"
+    export SDKMAN_DIR="$HOME/.sdkman"
+    
+    if [ ! -f "$SDKMAN_DIR/bin/sdkman-init.sh" ]; then
+        echo -e "${BLUE}Instalando SDKMAN!...${NC}"
+        curl -s "https://get.sdkman.io" | bash
+    else
+        echo -e "${BLUE}SDKMAN! ya está instalado.${NC}"
+    fi
+
+    # Cargar SDKMAN en el entorno actual
+    source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+    # Configurar auto-answer para que no pregunte confirmaciones
+    if [ -f "$SDKMAN_DIR/etc/config" ]; then
+        sed -i 's/sdkman_auto_answer=false/sdkman_auto_answer=true/g' "$SDKMAN_DIR/etc/config"
+    fi
+
+    # Instalar Java 17 y 21 (Temurin)
+    echo -e "${BLUE}Verificando/Instalando Java 17 (Temurin)...${NC}"
+    sdk install java 17.0.13-tem || echo -e "${RED}No se pudo instalar Java 17.${NC}"
+
+    echo -e "${BLUE}Verificando/Instalando Java 21 (Temurin)...${NC}"
+    sdk install java 21.0.5-tem || echo -e "${RED}No se pudo instalar Java 21.${NC}"
+    
+    # Establecer 21 como default si se desea
+    sdk default java 21.0.5-tem
+}
+
 install_packages() {
     echo -e "\n${BLUE}Verificando paquetes necesarios...${NC}"
     
@@ -194,10 +224,13 @@ install_packages
 # 5. Instalar herramientas locales (Ble.sh)
 install_blesh
 
-# 6. Habilitar servicios
+# 6. Instalar SDKMAN! y Java
+install_sdkman
+
+# 7. Habilitar servicios
 enable_services
 
-# 7. Configurar tema de SDDM
+# 8. Configurar tema de SDDM
 configure_sddm_theme
 
 echo -e "\n${GREEN}Configuración completada exitosamente.${NC}"
