@@ -63,3 +63,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # 10. Adjuntar BLE.SH (Al final)
 [[ ${BLE_VERSION-} ]] && ble-attach
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/d0s/.sdkman"
+[[ -s "/home/d0s/.sdkman/bin/sdkman-init.sh" ]] && source "/home/d0s/.sdkman/bin/sdkman-init.sh"
