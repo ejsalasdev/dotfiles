@@ -13,3 +13,4 @@ __pycache__/
 # Secrets (Safety net)
 .bash_secrets
 *.env
+config/gtk-3.0/bookmarks
