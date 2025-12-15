@@ -144,11 +144,10 @@ install_packages() {
 
         APPS_PKGS=(
             "firefox" "firefox-i18n-es-mx"
-            "vlc"
             "viewnior"
             "cups" "cups-pdf" "cups-filters" "gutenprint" "simple-scan"
             "libreoffice-still" "libreoffice-still-es" "bluetui"
-            "hyprsunset" "gsimplecal"
+            "hyprsunset" "gsimplecal" "mpv"
         )
 
         ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{MEDIA_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")
