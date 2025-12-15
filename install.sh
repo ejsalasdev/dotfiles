@@ -125,8 +125,10 @@ install_packages() {
             "zip" "unzip" "unrar" "p7zip"
         )
         
-        AUDIO_PKGS=(
+        MEDIA_PKGS=(
             "pipewire" "pipewire-pulse" "wireplumber" "pavucontrol" "pamixer"
+            "ffmpeg" "gst-libav" "gst-plugins-good" "gst-plugins-bad" "gst-plugins-ugly"
+            "intel-media-driver" "libva-utils"
         )
         
         THEME_PKGS=(
@@ -149,7 +151,7 @@ install_packages() {
             "hyprsunset" "gsimplecal"
         )
 
-        ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{AUDIO_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")
+        ALL_PACKAGES=("${{CORE_PKGS[@]}}" "${{FILE_MANAGER_PKGS[@]}}" "${{MEDIA_PKGS[@]}}" "${{THEME_PKGS[@]}}" "${{UTILS_PKGS[@]}}" "${{APPS_PKGS[@]}}")
         TO_INSTALL=()
 
         echo -e "${BLUE}Comprobando ${{#ALL_PACKAGES[@]}} paquetes...${NC}"
